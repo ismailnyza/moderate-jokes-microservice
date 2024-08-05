@@ -1,14 +1,19 @@
 const express = require("express");
-const { getJoke, updateJoke } = require("./controllers/jokeController");
+const {
+  getAllJokes,
+  getJoke,
+  updateJoke,
+} = require("./controllers/jokeController");
 const { protect } = require("./middlewares/authMiddleware");
-const User = require("./models/user");
+const User = require("./models/User");
 const setupSwagger = require("./swagger");
 const connectDB = require("./config");
-require("dotenv").config(); // Ensure this is included to load environment variables
+require("dotenv").config();
 const authRoutes = require("./routes/authRoutes");
+const cors = require("cors");
 
 const app = express();
-
+app.use(cors());
 // Middleware to parse JSON
 app.use(express.json());
 
@@ -40,13 +45,10 @@ createAdminUser();
 // Set up Swagger
 setupSwagger(app);
 
-// Define routes
-
-// Router setup
 const router = express.Router();
 app.use("/api/jokes", protect, router);
-router.route("/").get(getJoke);
-router.route("/:id").put(updateJoke);
+router.route("/").get(getAllJokes);
+router.route("/:id").get(getJoke).put(updateJoke); // Added missing get route for a single joke
 app.use("/api/auth", authRoutes);
 
 // Set the port

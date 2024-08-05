@@ -30,7 +30,8 @@ const jokeSchema = new mongoose.Schema({
     required: false,
   },
   type: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "JokeType",
     required: false,
   },
   status: {

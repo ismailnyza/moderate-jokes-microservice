@@ -1,9 +1,20 @@
-const Joke = require("../models/joke");
+const Joke = require("../models/Joke");
+const JokeType = require("../models/JokeType");
 const {
   submitJoke,
   deleteJoke,
   getJokeFromSubmitService,
 } = require("../services/jokeService");
+
+const getAllJokes = async (req, res) => {
+  try {
+    const jokes = await Joke.find().populate("type", "name");
+    res.json(jokes);
+  } catch (error) {
+    console.error("Error fetching jokes:", error);
+    res.status(500).json({ message: "Failed to get jokes" });
+  }
+};
 
 const getJoke = async (req, res) => {
   try {
@@ -45,4 +56,4 @@ const updateJoke = async (req, res) => {
   }
 };
 
-module.exports = { getJoke, updateJoke };
+module.exports = { getAllJokes, getJoke, updateJoke };

@@ -1,4 +1,4 @@
-const Joke = require("../models/joke");
+const Joke = require("../models/Joke");
 
 const getJokeFromSubmitService = async () => {
   try {

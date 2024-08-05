@@ -1,5 +1,11 @@
 const express = require("express");
 const { getJoke, updateJoke } = require("../controllers/jokeController");
+const {
+  getJoke,
+  getAllJokes,
+  getJokesByStatus,
+  updateJoke,
+} = require("../controllers/jokeController");
 const { protect } = require("../middlewares/authMiddleware");
 
 const router = express.Router();
@@ -29,7 +35,7 @@ const router = express.Router();
  *       500:
  *         description: Failed to get joke
  */
-router.route("/").get(protect, getJoke);
+router.route("/").get(protect, getAllJokes);
 
 /**
  * @swagger
